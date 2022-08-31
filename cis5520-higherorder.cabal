@@ -1,0 +1,70 @@
+cabal-version:       >=1.10
+name:                cis5520-higherorder
+version:             0.1.0.0
+synopsis:            Class materials from CIS 5520, UPenn
+description:         Higher-order functions
+bug-reports:         cis5520@seas.upenn.edu
+license:             MIT
+license-file:        LICENSE
+maintainer:          sweirich@seas.upenn.edu
+-- copyright:
+build-type:          Simple
+extra-source-files:  CHANGELOG.md
+
+library 
+  exposed-modules:     HigherOrder
+                       SecretCode
+                       Sum
+                       Foldr
+  build-depends:       base >=4.15
+                       , HUnit >= 1.6
+                       , filepath >= 1.4
+  default-language:    Haskell2010
+  ghc-options:         -Wno-type-defaults -fwarn-incomplete-patterns
+  default-extensions:
+    BangPatterns
+    BinaryLiterals
+    ConstrainedClassMethods
+    ConstraintKinds
+    DeriveDataTypeable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DeriveTraversable
+    DoAndIfThenElse
+    EmptyCase
+    EmptyDataDecls
+    EmptyDataDeriving
+    ExistentialQuantification
+    ExplicitForAll
+    FlexibleContexts
+    FlexibleInstances
+    ForeignFunctionInterface
+    GADTSyntax
+    GeneralisedNewtypeDeriving
+    HexFloatLiterals
+    ImplicitPrelude
+    ImportQualifiedPost
+    InstanceSigs
+    KindSignatures
+    MonomorphismRestriction
+    MultiParamTypeClasses
+    NamedFieldPuns
+    NamedWildCards
+    NumericUnderscores
+    PatternGuards
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    RelaxedPolyRec
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    StarIsType
+    TraditionalRecordSyntax
+    TupleSections
+    TypeApplications
+    TypeOperators
+    TypeSynonymInstances
+
