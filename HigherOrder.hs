@@ -1,7 +1,7 @@
 {-
 ---
 fulltitle: Higher-Order Programming Patterns
-date: September 12, 2022
+date: September 4, 2023
 ---
 -}
 
@@ -19,7 +19,7 @@ As in all functional languages, Haskell functions are *first-class*
 values, meaning that they can be treated just as you would any other
 data.
 
-You can pass functions around in *any* manner that you can pass any
+You can pass functions around in the *same* way that you can pass any
 other data around. For example, suppose you have the simple functions
 `plus1` and `minus1` defined via the equations
 -}
@@ -99,10 +99,12 @@ compiler is a bit smarter though, and will reuse computations when it can
 today, but remember that there is a difference in evaluation order between
 Haskell and almost every other language that you have seen.
 
-Furthermore, what is great is that in Haskell thinking about evaluation
-in terms of substituting equals-for-equals works anywhere. As a result,
-we could *also* understand the evaluation of `doTwice` using a more
-standard order of evaluation.
+What is great about Haskell is that it is designed so that you don't have to
+worry about the evaluation order.  The substitution model of evaluation is
+*always* correct, and you can replace equals-for-equals *anywhere* in a
+Haskell program to figure out its value. What this means is that you can
+could *also* understand the evaluation of `doTwice` using a more
+standard order of evaluation
 
 ~~~~~
    doTwice plus1 10   {- unfold doTwice -}
@@ -132,10 +134,16 @@ or even a hybrid of the two versions!
 == 12
 ~~~~~
 
+Reasoning in Haskell is flexible in this respect because of *purity*, the idea
+that computation is based on functions that always return the same result for
+the same input. Purity is lost when you have side-effects, like printing to the
+screen or modifying the value of a variable.  Haskell allows side-effects, but only in a
+controlled way.
+
 Returning Functions as Output
 -----------------------------
 
-Similarly, it can be useful to write functions that return new
+IXt can be useful to write functions that return new
 functions as output. For example, rather than writing different
 versions `plus1`, `plus2`, `plus3`, *etc.* we can write a
 single function `plusn` as
@@ -463,7 +471,7 @@ The `a` above is a *type variable*. The signature above states that
 the first argument to `doTwice` must be a function that maps values of
 type `a` to `a`, i.e. it must produce an output that has the same type
 as its input (so that that output can be fed into the function again!).
-The second argument must also be an `a` at which point we may are
+The second argument must also be an `a` at which point we are
 guaranteed that the result from `doTwice` will also be an `a`. The
 above holds for *any* `a` which allows us to safely re-use `doTwice`
 in different settings.
@@ -800,7 +808,7 @@ type:
 
 filter :: (a -> Bool) -> [a] -> [a]
 {-
-The idea is that it the output list should contain only the elements
+The idea is that the output list should contain only the elements
 of the first list for which the input function returns `True`.
 
 So:

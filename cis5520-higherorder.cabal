@@ -19,52 +19,8 @@ library
   build-depends:       base >=4.15
                        , HUnit >= 1.6
                        , filepath >= 1.4
-  default-language:    Haskell2010
+  default-language:    GHC2021
   ghc-options:         -Wno-type-defaults -fwarn-incomplete-patterns
   default-extensions:
-    BangPatterns
-    BinaryLiterals
-    ConstrainedClassMethods
-    ConstraintKinds
-    DeriveDataTypeable
-    DeriveFoldable
-    DeriveFunctor
-    DeriveGeneric
-    DeriveLift
-    DeriveTraversable
-    DoAndIfThenElse
-    EmptyCase
-    EmptyDataDecls
-    EmptyDataDeriving
-    ExistentialQuantification
-    ExplicitForAll
-    FlexibleContexts
-    FlexibleInstances
-    ForeignFunctionInterface
-    GADTSyntax
-    GeneralisedNewtypeDeriving
-    HexFloatLiterals
-    ImplicitPrelude
-    ImportQualifiedPost
-    InstanceSigs
-    KindSignatures
-    MonomorphismRestriction
-    MultiParamTypeClasses
-    NamedFieldPuns
-    NamedWildCards
-    NumericUnderscores
-    PatternGuards
-    PolyKinds
-    PostfixOperators
-    RankNTypes
-    RelaxedPolyRec
-    ScopedTypeVariables
-    StandaloneDeriving
-    StandaloneKindSignatures
-    StarIsType
-    TraditionalRecordSyntax
-    TupleSections
-    TypeApplications
-    TypeOperators
-    TypeSynonymInstances
+
 

@@ -1,15 +1,19 @@
 {-
 ---
 fulltitle: "In class exercise: foldr"
+date: September 6, 2023
 ---
 
 In [HigherOrder](HigherOrder.html) we saw a few functions that you could write using the
-general purpose 'foldr' function. This function captures the general pattern of
+general purpose `foldr function. This function captures the general pattern of
 list recursion and is also good practice for working with higher-order functions.
 
-This set of exercises is intended to give you more practice with using 'foldr'
+This set of exercises is intended to give you more practice with using `foldr`
 on lists. You should start with one at the right level for you and your
 partner (they are ordered in terms of difficulty).
+
+If you finish this module, you should also look at variations in the definition
+of `foldr` shown in the module [Sum](Sum.html).
 -}
 
 module Foldr where
@@ -22,7 +26,7 @@ Length Example
 --------------
 
 This function counts the number of elements stored in a list. The recursive
-definition of the length function is
+definition of the `length` function is
 -}
 
 -- >>> length1 "abc"

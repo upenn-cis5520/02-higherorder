@@ -1,7 +1,13 @@
 {-
 ---
-fulltitle: "In class exercise: SecretCode"
+fulltitle: "Optional exercise: SecretCode"
+date: September 4, 2023
 ---
+
+This module is for those who are completely new to functional programming.
+It is an optional exercise, and will give you a chance to practice before
+the first in-class exercise. If you have questions about this exercise,
+please ask on the Ed platform or in office hours.
 -}
 
 module SecretCode where

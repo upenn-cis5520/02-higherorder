@@ -1,10 +1,12 @@
 {-
 ---
-fulltitle: foldr vs. foldl
+fulltitle: "Optional exercise: foldr vs. foldl"
+date: September 6, 2023
 ---
 
 This module contains some quick examples demonstrating the difference between
-foldr and foldl. It is advanced material for CIS 5520.
+foldr and foldl. It is advanced material for CIS 5520, designed for those who
+have seen `fold` and tail recursion before, such as in CIS 1200.
 -}
 
 module Sum where
@@ -12,8 +14,10 @@ module Sum where
 import Prelude hiding (foldl, foldr)
 
 {-
-Start with a concrete example of a fold --- the "sum" function that adds
- together all numbers in a list.
+Let's start with a concrete example of a fold --- the "sum" function that adds
+together all numbers in a list. We can write this function in four different
+ways. The first two are the standard recursive definitions of sum. The third
+and fourth use a helper function that includes an accumulator.
 -}
 
 sum1 :: [Int] -> Int
@@ -37,7 +41,9 @@ sum4 = sumAux 0
     sumAux acc (x : xs) = sumAux (x + acc) xs
 
 {-
-All of these functions give us the same result because (+) is associative and commutative. But none give us exactly the same computation. But they don't evaluate in the same way.
+All of these functions give us the same result because (+) is associative and
+commutative. However, none of these functions give us exactly the same
+*computation*: they each process the list in a different order.
 
          sum1 [1,2,3]
            == 1 + (2 + (3 + 0))
@@ -48,21 +54,13 @@ All of these functions give us the same result because (+) is associative and co
          sum4 [1,2,3]
            == (3 + (2 + (1 + 0)))
 
-And, none of them are tail recursive. To get an actual tail recursive function
-in Haskell, we need to evaluate the accumulator before the recursive call.
-The operation `($!)` is CBV function application, i.e. it forces GHC to
-evaluate the argument before making a recursiove call.
--}
+Generalizing Fold
+------------------
 
-sum5 :: [Int] -> Int
-sum5 = sumAux 0
-  where
-    sumAux acc [] = acc
-    sumAux acc (x : xs) = (sumAux $! (x + acc)) xs
-
-{-
 We can generalize the examples above to create several different
-recursion patterns over lists.
+recursion patterns over lists. Compare these definitions with
+the variants of `sum` above. Then try to write the missing fourth
+variant`.
 -}
 
 foldr :: (a -> b -> b) -> b -> [a] -> b
@@ -84,10 +82,48 @@ foldl f = go
     go acc (x : xs) = go (acc `f` x) xs
 
 foldlFlip :: (a -> b -> b) -> b -> [a] -> b
-foldlFlip f = go
+-- >>> foldrFlip (flip (:)) [] [1,2,3]
+
+-- >>> foldl (flip (:)) [] [1,2,3]
+
+-- >>> foldlFlip (:) [] [1,2,3]
+
+{-
+On the other hand, the `(-)` operator is not associative,
+so again the results will be different.
+-}
+
+-- >>> foldr (-) 0 [1,2,3]
+
+-- >>> foldrFlip (-) 0 [1,2,3]
+
+-- >>> foldl (-) 0 [1,2,3]
+
+-- >>> foldlFlip (-) 0 [1,2,3]
+
+{-
+Tail Recursion
+--------------
+
+Somewhat surprisingly, the definitions of `sum3` and `sum4` are *not* tail recursive. The
+problem is due to laziness: the argument in the recursive call to `sumAux`
+is not evaluated until the result is needed. To get an actual tail recursive function
+in Haskell, we need to evaluate this accumulator before `sumAux` is called recursively.
+Therefore, we will redefine `sum4` using the operation `($!)` which overrides laziness
+and forces call-by-value function application. In otherwords, with this operator, GHC
+will compile the code to evaluate the argument before making a recursiove call.
+-}
+
+sum5 :: [Int] -> Int
+sum5 = sumAux 0
   where
-    go acc [] = acc
-    go acc (x : xs) = go (x `f` acc) xs
+    sumAux acc [] = acc
+    sumAux acc (x : xs) = (sumAux $! (x + acc)) xs
+
+{-
+We can generalize this pattern by adding a strictness annotation to the definition
+of foldl. This is the definition of `foldl'` in the standard library.
+-}
 
 foldl' :: (b -> a -> b) -> b -> [a] -> b
 foldl' f = go
@@ -96,10 +132,61 @@ foldl' f = go
     go acc (x : xs) = (go $! acc `f` x) xs
 
 {-
---------------------------------------------------
+Microbenchmarks
+----------------
 
 Here are some micro-benchmarks for thinking about laziness and saved
 computation.
+
+If you would like to better understand the performance of various folds,
+you can use the `:set +s` command in GHCi to get timing and allocation
+information for each evaluation that you do.
+
+To do so, first load the definitions in this module into GHCi. To do so,
+start the terminal in VS Code, and then use the command
+
+      stack ghci Sum.hs
+
+to start ghci and load the module.
+
+Next, in GHCi you can type
+
+    Sum> :set +s
+
+to cause GHCi to report timing and allocation data. If you make changes
+to any of the definitions in this file, you will need to reload it in
+ghci using the command
+
+    Sum> :r
+
+For example, to compare the performance of the sum functions we can
+call them with large lists:
+-}
+
+c1, c2, c3, c4, c5 :: Int
+c1 = sum1 [1 .. 1000000]
+c2 = sum2 [1 .. 1000000]
+c3 = sum3 [1 .. 1000000]
+c4 = sum4 [1 .. 1000000]
+c5 = sum5 [1 .. 1000000]
+
+{-
+When you ask GHCi to evaluate each of these computations, you will see
+both the timing and the number of bytes allocated.
+
+        ghci> c1
+        500000500000
+        (0.38 secs, 226,778,360 bytes)
+
+However, remember that GHC is lazy, so it will save the result. If you
+ask for the same value again, it will take much less time and space.
+
+        ghci> c1
+        500000500000
+        (0.00 secs, 315,144 bytes)
+
+Here are some other examples to try. What can you learn about Haskell's execution
+model from these examples?
 -}
 
 -- A potentially big computation
