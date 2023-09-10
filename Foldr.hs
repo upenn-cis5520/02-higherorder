@@ -1,7 +1,7 @@
 {-
 ---
 fulltitle: "In class exercise: foldr"
-date: September 6, 2023
+date: September 13, 2023
 ---
 
 In [HigherOrder](HigherOrder.html) we saw a few functions that you could write using the

@@ -1,7 +1,7 @@
 {-
 ---
 fulltitle: "Optional exercise: foldr vs. foldl"
-date: September 6, 2023
+date: September 13, 2023
 ---
 
 This module contains some quick examples demonstrating the difference between
@@ -82,6 +82,32 @@ foldl f = go
     go acc (x : xs) = go (acc `f` x) xs
 
 foldlFlip :: (a -> b -> b) -> b -> [a] -> b
+foldlFlip f = undefined
+
+sum1' :: [Int] -> Int
+sum1' = foldr (+) 0
+
+sum2' :: [Int] -> Int
+sum2' = foldrFlip (+) 0
+
+sum3' :: [Int] -> Int
+sum3' = foldl (+) 0
+
+{-
+
+-}
+
+sum4' :: [Int] -> Int
+sum4' = foldlFlip (+) 0
+
+{-
+Now see what happens when you use these general operations
+with the `(:)` operator. Unlike `(+)`, `(:)` is not
+*commutative* so not all of the results will be the same.
+-}
+
+-- >>> foldr (:) [] [1,2,3]
+
 -- >>> foldrFlip (flip (:)) [] [1,2,3]
 
 -- >>> foldl (flip (:)) [] [1,2,3]

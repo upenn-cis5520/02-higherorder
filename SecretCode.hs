@@ -1,7 +1,7 @@
 {-
 ---
 fulltitle: "Optional exercise: SecretCode"
-date: September 4, 2023
+date: September 11, 2023
 ---
 
 This module is for those who are completely new to functional programming.

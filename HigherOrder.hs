@@ -1,7 +1,7 @@
 {-
 ---
 fulltitle: Higher-Order Programming Patterns
-date: September 4, 2023
+date: September 11, 2023
 ---
 -}
 
@@ -143,7 +143,7 @@ controlled way.
 Returning Functions as Output
 -----------------------------
 
-IXt can be useful to write functions that return new
+It can be useful to write functions that return new
 functions as output. For example, rather than writing different
 versions `plus1`, `plus2`, `plus3`, *etc.* we can write a
 single function `plusn` as
